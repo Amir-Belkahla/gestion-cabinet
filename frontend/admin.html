@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration — Cabinet Médical</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header"><div class="brand"><span>🏥</span> Cabinet Médical</div></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span> Tableau de bord</a>
+      <a href="patients.html" class="nav-item" data-role="admin,medecin,secretaire"><span class="nav-icon">👤</span> Patients</a>
+      <a href="rendez-vous.html" class="nav-item"><span class="nav-icon">📅</span> Rendez-vous</a>
+      <a href="consultations.html" class="nav-item"><span class="nav-icon">🩺</span> Consultations</a>
+      <a href="ordonnances.html" class="nav-item"><span class="nav-icon">💊</span> Ordonnances</a>
+      <a href="utilisateurs.html" class="nav-item" data-role="admin"><span class="nav-icon">👥</span> Utilisateurs</a>
+      <a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span> Notifications</a>
+      <a href="admin.html" class="nav-item active" data-role="admin"><span class="nav-icon">⚙️</span> Administration</a>
+      <a href="profil.html" class="nav-item"><span class="nav-icon">👤</span> Mon profil</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar" id="sb-user-avatar">?</div>
+        <div class="user-info">
+          <div class="user-name" id="sb-user-name">—</div>
+          <div class="user-role" id="sb-user-role">—</div>
+        </div>
+      </div>
+      <button onclick="logout()" class="btn btn-ghost btn-sm w-100 mt-2" style="justify-content:center">🚪 Déconnexion</button>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left"><h2>Administration</h2></div>
+      <div class="topbar-right">
+        <button class="notif-btn" onclick="location.href='notifications.html'">🔔<span class="badge-notif" id="notif-badge" style="display:none">0</span></button>
+        <span id="top-user-name" style="font-weight:600;font-size:.85rem"></span>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <div class="tabs-header">
+        <button class="tab-btn active" onclick="showTab('logs')">📋 Journaux système</button>
+        <button class="tab-btn" onclick="showTab('params')">⚙️ Paramètres</button>
+      </div>
+
+      <!-- Onglet Logs -->
+      <div id="tab-logs" class="tab-content card">
+        <div class="toolbar" style="padding:1rem 1rem 0">
+          <div class="filters-group">
+            <input type="date" id="f-log-date" class="form-control" style="width:160px" onchange="loadLogs()">
+            <input type="text" id="f-log-action" class="form-control" style="width:200px" placeholder="Filtrer par action" onkeyup="debounce(loadLogs,400)()">
+          </div>
+          <span style="font-size:.85rem;color:var(--text-light)" id="log-total-text"></span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>Date</th><th>Utilisateur</th><th>Action</th><th>Table</th><th>IP</th><th>Détails</th></tr>
+            </thead>
+            <tbody id="log-tbody">
+              <tr><td colspan="6"><div class="loading-overlay"><span class="spinner"></span></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination" id="log-pag"></div>
+      </div>
+
+      <!-- Onglet Paramètres -->
+      <div id="tab-params" class="tab-content card" style="display:none">
+        <div style="padding:1rem">
+          <p style="color:var(--text-light);font-size:.9rem;margin-bottom:1rem">Configurer les paramètres du cabinet</p>
+          <div id="params-list">
+            <div class="loading-overlay"><span class="spinner"></span></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

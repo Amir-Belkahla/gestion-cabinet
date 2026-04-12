@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cabinet Médical — Connexion</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-icon">🏥</div>
+      <h1>Cabinet Médical</h1>
+      <p style="color:var(--text-muted);font-size:.85rem;margin-top:.25rem">Système de gestion</p>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display:flex;border-bottom:1.5px solid var(--border);margin-bottom:1.5rem">
+      <button class="tab-btn active" data-tab="login" onclick="switchTab('login')"
+        style="flex:1;padding:.6rem;background:none;border:none;cursor:pointer;font-weight:600;color:var(--primary);border-bottom:2.5px solid var(--primary);margin-bottom:-1.5px">
+        Connexion
+      </button>
+      <button class="tab-btn" data-tab="register" onclick="switchTab('register')"
+        style="flex:1;padding:.6rem;background:none;border:none;cursor:pointer;font-weight:600;color:var(--text-muted)">
+        Inscription
+      </button>
+    </div>
+
+    <!-- Login form -->
+    <div id="tab-login">
+      <form id="form-login" onsubmit="doLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Email <span class="req">*</span></label>
+          <input type="email" id="login-email" class="form-control" placeholder="votre@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe <span class="req">*</span></label>
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+        </div>
+        <div id="login-error" style="color:var(--danger);font-size:.82rem;margin-bottom:.75rem;display:none"></div>
+        <button type="submit" class="btn btn-primary w-100 btn-lg" id="btn-login">
+          <span>Se connecter</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Register form -->
+    <div id="tab-register" style="display:none">
+      <form id="form-register" onsubmit="doRegister(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nom <span class="req">*</span></label>
+            <input type="text" id="reg-nom" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prénom <span class="req">*</span></label>
+            <input type="text" id="reg-prenom" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email <span class="req">*</span></label>
+          <input type="email" id="reg-email" class="form-control" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Date de naissance <span class="req">*</span></label>
+            <input type="date" id="reg-dob" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Sexe <span class="req">*</span></label>
+            <select id="reg-sexe" class="form-select" required>
+              <option value="M">Masculin</option>
+              <option value="F">Féminin</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Téléphone</label>
+          <input type="tel" id="reg-tel" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe <span class="req">*</span></label>
+          <input type="password" id="reg-password" class="form-control" minlength="8" required>
+        </div>
+        <div id="register-error" style="color:var(--danger);font-size:.82rem;margin-bottom:.75rem;display:none"></div>
+        <button type="submit" class="btn btn-primary w-100 btn-lg" id="btn-register">
+          <span>Créer mon compte patient</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  // Rediriger si déjà connecté
+  if (Auth.isLoggedIn()) window.location.href = 'dashboard.html';
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      const active = b.dataset.tab === tab;
+      b.style.color = active ? 'var(--primary)' : 'var(--text-muted)';
+      b.style.borderBottom = active ? '2.5px solid var(--primary)' : 'none';
+    });
+    document.getElementById('tab-login').style.display    = tab === 'login'    ? '' : 'none';
+    document.getElementById('tab-register').style.display = tab === 'register' ? '' : 'none';
+  }
+
+  async function doLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btn-login');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>';
+    document.getElementById('login-error').style.display = 'none';
+
+    try {
+      const res = await API.post('/api/auth/login', {
+        email: document.getElementById('login-email').value,
+        mot_de_passe: document.getElementById('login-password').value
+      });
+      Auth.saveSession(res.data);
+      window.location.href = 'dashboard.html';
+    } catch (err) {
+      document.getElementById('login-error').textContent = err.message;
+      document.getElementById('login-error').style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<span>Se connecter</span>';
+    }
+  }
+
+  async function doRegister(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btn-register');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>';
+    document.getElementById('register-error').style.display = 'none';
+
+    try {
+      const res = await API.post('/api/auth/register', {
+        nom: document.getElementById('reg-nom').value,
+        prenom: document.getElementById('reg-prenom').value,
+        email: document.getElementById('reg-email').value,
+        date_naissance: document.getElementById('reg-dob').value,
+        sexe: document.getElementById('reg-sexe').value,
+        telephone: document.getElementById('reg-tel').value,
+        mot_de_passe: document.getElementById('reg-password').value
+      });
+      Auth.saveSession(res.data);
+      window.location.href = 'dashboard.html';
+    } catch (err) {
+      document.getElementById('register-error').textContent = err.message;
+      document.getElementById('register-error').style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<span>Créer mon compte patient</span>';
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord — Cabinet Médical</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand"><span>🏥</span> Cabinet Médical</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Menu</div>
+      <a href="dashboard.html" class="nav-item active" data-page="dashboard">
+        <span class="nav-icon">📊</span> Tableau de bord
+      </a>
+      <a href="patients.html" class="nav-item" data-page="patients" data-role="admin,medecin,secretaire">
+        <span class="nav-icon">👤</span> Patients
+      </a>
+      <a href="rendez-vous.html" class="nav-item" data-page="rendez-vous">
+        <span class="nav-icon">📅</span> Rendez-vous
+      </a>
+      <a href="consultations.html" class="nav-item" data-page="consultations" data-role="admin,medecin,patient">
+        <span class="nav-icon">🩺</span> Consultations
+      </a>
+      <a href="ordonnances.html" class="nav-item" data-page="ordonnances" data-role="admin,medecin,patient">
+        <span class="nav-icon">💊</span> Ordonnances
+      </a>
+      <div class="nav-section-title" data-role="admin">Administration</div>
+      <a href="utilisateurs.html" class="nav-item" data-page="utilisateurs" data-role="admin">
+        <span class="nav-icon">👥</span> Utilisateurs
+      </a>
+      <a href="admin.html" class="nav-item" data-page="admin" data-role="admin">
+        <span class="nav-icon">⚙️</span> Administration
+      </a>
+      <div class="nav-section-title">Compte</div>
+      <a href="notifications.html" class="nav-item" data-page="notifications">
+        <span class="nav-icon">🔔</span> Notifications
+      </a>
+      <a href="profil.html" class="nav-item" data-page="profil">
+        <span class="nav-icon">👤</span> Mon profil
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="user-avatar" id="sb-user-avatar">?</div>
+        <div class="user-info">
+          <div class="user-name" id="sb-user-name">—</div>
+          <div class="user-role" id="sb-user-role">—</div>
+        </div>
+      </div>
+      <button onclick="logout()" class="btn btn-ghost btn-sm w-100 mt-2" style="justify-content:center">
+        🚪 Déconnexion
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left"><h2>Tableau de bord</h2></div>
+      <div class="topbar-right">
+        <button class="notif-btn" onclick="location.href='notifications.html'">
+          🔔
+          <span class="badge-notif" id="notif-badge" style="display:none">0</span>
+        </button>
+        <span id="top-user-name" style="font-weight:600;font-size:.85rem"></span>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <!-- Admin stats -->
+      <div id="admin-stats" style="display:none">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue">👥</div>
+            <div>
+              <div class="stat-value" id="stat-utilisateurs">—</div>
+              <div class="stat-label">Utilisateurs actifs</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">👤</div>
+            <div>
+              <div class="stat-value" id="stat-patients">—</div>
+              <div class="stat-label">Patients</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon purple">🩺</div>
+            <div>
+              <div class="stat-value" id="stat-medecins">—</div>
+              <div class="stat-label">Médecins</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">📅</div>
+            <div>
+              <div class="stat-value" id="stat-rdv-today">—</div>
+              <div class="stat-label">RDV aujourd'hui</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon cyan">⏳</div>
+            <div>
+              <div class="stat-value" id="stat-rdv-attente">—</div>
+              <div class="stat-label">RDV en attente</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RDV today table for staff -->
+      <div id="staff-dashboard" style="display:none">
+        <h2 class="section-title">Rendez-vous d'aujourd'hui</h2>
+        <div class="card">
+          <div class="card-header">
+            <h3>📅 Planning du jour — <span id="today-date"></span></h3>
+            <a href="rendez-vous.html" class="btn btn-outline-primary btn-sm">Voir tout</a>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Heure</th><th>Patient</th><th>Médecin</th><th>Motif</th><th>Statut</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="rdv-today-tbody">
+                <tr><td colspan="6" class="loading-overlay"><span class="spinner"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Patient dashboard -->
+      <div id="patient-dashboard" style="display:none">
+        <h2 class="section-title">Mes prochains rendez-vous</h2>
+        <div class="card">
+          <div class="card-header">
+            <h3>📅 Mes rendez-vous</h3>
+            <a href="rendez-vous.html" class="btn btn-outline-primary btn-sm">Prendre un RDV</a>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>Date</th><th>Heure</th><th>Médecin</th><th>Motif</th><th>Statut</th></tr>
+              </thead>
+              <tbody id="patient-rdv-tbody">
+                <tr><td colspan="5" class="loading-overlay"><span class="spinner"></span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script>
+  const user = Auth.getUser();
+
+  document.getElementById('today-date').textContent = new Date().toLocaleDateString('fr-FR', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  async function loadDashboard() {
+    const role = Auth.getRole();
+
+    if (Auth.can('admin')) {
+      document.getElementById('admin-stats').style.display = '';
+      document.getElementById('staff-dashboard').style.display = '';
+      try {
+        const res = await API.get('/api/admin/stats');
+        const s = res.data;
+        document.getElementById('stat-utilisateurs').textContent = s.total_utilisateurs ?? 0;
+        document.getElementById('stat-patients').textContent     = s.total_patients ?? 0;
+        document.getElementById('stat-medecins').textContent     = s.total_medecins ?? 0;
+        document.getElementById('stat-rdv-today').textContent    = s.rdv_aujourdhui ?? 0;
+        document.getElementById('stat-rdv-attente').textContent  = s.rdv_en_attente ?? 0;
+      } catch (e) { Toast.error(e.message); }
+    }
+
+    if (Auth.can('admin', 'medecin', 'secretaire')) {
+      document.getElementById('staff-dashboard').style.display = '';
+      try {
+        const date = new Date().toISOString().split('T')[0];
+        const res  = await API.get('/api/rendez-vous', { date });
+        const rdvs = res.data.data || [];
+        const tbody = document.getElementById('rdv-today-tbody');
+        tbody.innerHTML = rdvs.length ? rdvs.map(r => `
+          <tr>
+            <td><strong>${r.heure_debut}–${r.heure_fin}</strong></td>
+            <td>${r.patient_nom}</td>
+            <td>${r.medecin_nom}</td>
+            <td>${r.motif || '—'}</td>
+            <td>${badgeStatut(r.statut)}</td>
+            <td>
+              ${r.statut === 'planifie' ? `<button class="btn btn-success btn-sm" onclick="confirmerRdv(${r.id})">Confirmer</button>` : ''}
+              ${Auth.can('admin','medecin') && r.statut !== 'termine' && r.statut !== 'annule' ?
+                `<button class="btn btn-info btn-sm" onclick="terminerRdv(${r.id})">Terminer</button>` : ''}
+            </td>
+          </tr>`).join('') : `<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📅</div><p>Aucun rendez-vous aujourd'hui</p></div></td></tr>`;
+      } catch (e) { Toast.error(e.message); }
+    }
+
+    if (Auth.can('patient')) {
+      document.getElementById('patient-dashboard').style.display = '';
+      try {
+        const res = await API.get('/api/rendez-vous/mes-rdv');
+        const rdvs = (res.data || []).filter(r => r.statut !== 'annule' && r.statut !== 'termine').slice(0, 5);
+        const tbody = document.getElementById('patient-rdv-tbody');
+        tbody.innerHTML = rdvs.length ? rdvs.map(r => `
+          <tr>
+            <td>${formatDate(r.date_rdv)}</td>
+            <td>${r.heure_debut}–${r.heure_fin}</td>
+            <td>Dr ${r.medecin_nom}<br><small class="text-muted">${r.specialite || ''}</small></td>
+            <td>${r.motif || '—'}</td>
+            <td>${badgeStatut(r.statut)}</td>
+          </tr>`).join('') : `<tr><td colspan="5"><div class="empty-state"><div class="empty-icon">📅</div><p>Aucun rendez-vous</p></div></td></tr>`;
+      } catch (e) { Toast.error(e.message); }
+    }
+  }
+
+  async function confirmerRdv(id) {
+    await API.patch(`/api/rendez-vous/${id}/confirmer`);
+    Toast.success('RDV confirmé');
+    loadDashboard();
+  }
+
+  async function terminerRdv(id) {
+    await API.patch(`/api/rendez-vous/${id}/terminer`);
+    Toast.success('RDV terminé');
+    loadDashboard();
+  }
+
+  loadDashboard();
+</script>
+</body>
+</html>
