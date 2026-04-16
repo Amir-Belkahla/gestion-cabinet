@@ -9,7 +9,7 @@ const API = {
     const token = localStorage.getItem('access_token');
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const opts = { method, headers, credentials: 'include' };
+    const opts = { method, headers };
     if (data && method !== 'GET') opts.body = JSON.stringify(data);
 
     const url = API_BASE + endpoint;
@@ -26,7 +26,7 @@ const API = {
       const refreshed = await API._tryRefresh();
       if (refreshed) {
         headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
-        res = await fetch(url, { method, headers, credentials: 'include', body: opts.body });
+        res = await fetch(url, { method, headers, body: opts.body });
       } else {
         Auth.logout();
         return;
@@ -48,8 +48,7 @@ const API = {
       const res = await fetch(`${API_BASE}/api/auth/refresh`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ refresh_token: rt }),
-        credentials: 'include'
+        body: JSON.stringify({ refresh_token: rt })
       });
       const json = await res.json();
       if (json.success && json.data?.access_token) {
