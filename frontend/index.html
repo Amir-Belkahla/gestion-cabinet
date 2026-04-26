@@ -1,165 +1,657 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cabinet Médical — Connexion</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabinet Médical Béjaïa — Excellence & Innovation</title>
+    <meta name="description" content="Découvrez le cabinet médical le plus moderne de Béjaïa. Des soins de santé de qualité avec une gestion innovante pour votre confort.">
+    <link rel="stylesheet" href="css/landing.css">
+    <!-- Lucide Icons for stars or other icons if needed -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-<div class="auth-wrapper">
-  <div class="auth-card">
-    <div class="auth-logo">
-      <div class="logo-icon">🏥</div>
-      <h1>Cabinet Médical</h1>
-      <p style="color:var(--text-muted);font-size:.85rem;margin-top:.25rem">Système de gestion</p>
-    </div>
 
-    <!-- Tabs -->
-    <div style="display:flex;border-bottom:1.5px solid var(--border);margin-bottom:1.5rem">
-      <button class="tab-btn active" data-tab="login" onclick="switchTab('login')"
-        style="flex:1;padding:.6rem;background:none;border:none;cursor:pointer;font-weight:600;color:var(--primary);border-bottom:2.5px solid var(--primary);margin-bottom:-1.5px">
-        Connexion
-      </button>
-      <button class="tab-btn" data-tab="register" onclick="switchTab('register')"
-        style="flex:1;padding:.6rem;background:none;border:none;cursor:pointer;font-weight:600;color:var(--text-muted)">
-        Inscription
-      </button>
-    </div>
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">🏥</div>
+                <span class="logo-text">Medicaly</span>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#hero" class="nav-link active">Accueil</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#about" class="nav-link">À propos</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
 
-    <!-- Login form -->
-    <div id="tab-login">
-      <form id="form-login" onsubmit="doLogin(event)">
-        <div class="form-group">
-          <label class="form-label">Email <span class="req">*</span></label>
-          <input type="email" id="login-email" class="form-control" placeholder="votre@email.com" required>
+            <div class="nav-actions">
+                <a href="login.html?tab=register" class="nav-cta-btn">S'inscrire</a>
+            </div>
+            
+            <!-- Mobile Toggle -->
+            <button class="mobile-toggle">
+                <i data-lucide="menu"></i>
+            </button>
         </div>
-        <div class="form-group">
-          <label class="form-label">Mot de passe <span class="req">*</span></label>
-          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
-        </div>
-        <div id="login-error" style="color:var(--danger);font-size:.82rem;margin-bottom:.75rem;display:none"></div>
-        <button type="submit" class="btn btn-primary w-100 btn-lg" id="btn-login">
-          <span>Se connecter</span>
-        </button>
-      </form>
-    </div>
+    </header>
 
-    <!-- Register form -->
-    <div id="tab-register" style="display:none">
-      <form id="form-register" onsubmit="doRegister(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Nom <span class="req">*</span></label>
-            <input type="text" id="reg-nom" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Prénom <span class="req">*</span></label>
-            <input type="text" id="reg-prenom" class="form-control" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email <span class="req">*</span></label>
-          <input type="email" id="reg-email" class="form-control" required>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Date de naissance <span class="req">*</span></label>
-            <input type="date" id="reg-dob" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Sexe <span class="req">*</span></label>
-            <select id="reg-sexe" class="form-select" required>
-              <option value="M">Masculin</option>
-              <option value="F">Féminin</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Téléphone</label>
-          <input type="tel" id="reg-tel" class="form-control">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Mot de passe <span class="req">*</span></label>
-          <input type="password" id="reg-password" class="form-control" minlength="8" required>
-        </div>
-        <div id="register-error" style="color:var(--danger);font-size:.82rem;margin-bottom:.75rem;display:none"></div>
-        <button type="submit" class="btn btn-primary w-100 btn-lg" id="btn-register">
-          <span>Créer mon compte patient</span>
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
+    <main>
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Une expertise médicale moderne<br>pour votre santé à Béjaïa</h1>
+                <p class="hero-description">
+                    Optimisez votre parcours de soin avec notre cabinet. Nous allions technologie et expertise humaine pour vous offrir une prise en charge rapide, efficace et centrée sur l'humain.
+                </p>
+                <div class="hero-actions">
+                    <a href="login.html" class="hero-btn">Découvrir le cabinet</a>
+                </div>
+            </div>
 
-<div id="toast-container"></div>
+            <div class="hero-image-container">
+                <img src="assets/hero.jpg" alt="Docteur souriante au Cabinet Médical de Béjaïa" class="hero-image">
+            </div>
 
-<script src="js/api.js"></script>
-<script src="js/auth.js"></script>
-<script>
-  // Rediriger si déjà connecté
-  if (Auth.isLoggedIn()) window.location.href = 'dashboard.html';
+            <div class="floating-cards">
+                <!-- Satisfied Patients Card -->
+                <div class="card-satisfied">
+                    <div class="avatars">
+                        <div class="avatar" style="background-image: url('https://i.pravatar.cc/100?u=1'); background-size: cover;"></div>
+                        <div class="avatar" style="background-image: url('https://i.pravatar.cc/100?u=2'); background-size: cover;"></div>
+                        <div class="avatar" style="background-image: url('https://i.pravatar.cc/100?u=3'); background-size: cover;"></div>
+                        <div class="avatar" style="background-image: url('https://i.pravatar.cc/100?u=4'); background-size: cover;"></div>
+                    </div>
+                    <div class="satisfied-info">
+                        <div class="stars">
+                            <i data-lucide="star" style="fill: #f59e0b; width: 14px; height: 14px;"></i>
+                            <i data-lucide="star" style="fill: #f59e0b; width: 14px; height: 14px;"></i>
+                            <i data-lucide="star" style="fill: #f59e0b; width: 14px; height: 14px;"></i>
+                            <i data-lucide="star" style="fill: #f59e0b; width: 14px; height: 14px;"></i>
+                            <i data-lucide="star" style="fill: #f59e0b; width: 14px; height: 14px;"></i>
+                        </div>
+                        <span class="satisfied-text">1k+ Patients satisfaits</span>
+                    </div>
+                </div>
 
-  function switchTab(tab) {
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      const active = b.dataset.tab === tab;
-      b.style.color = active ? 'var(--primary)' : 'var(--text-muted)';
-      b.style.borderBottom = active ? '2.5px solid var(--primary)' : 'none';
-    });
-    document.getElementById('tab-login').style.display    = tab === 'login'    ? '' : 'none';
-    document.getElementById('tab-register').style.display = tab === 'register' ? '' : 'none';
-  }
+                <!-- Stats Row -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <span class="stat-value">18%</span>
+                        <span class="stat-label">Réduction du temps d'attente</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value">20%</span>
+                        <span class="stat-label">Amélioration du suivi patient</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  async function doLogin(e) {
-    e.preventDefault();
-    const btn = document.getElementById('btn-login');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span>';
-    document.getElementById('login-error').style.display = 'none';
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="about-container">
+                <!-- Left Image -->
+                <div class="about-image-main">
+                    <img src="assets/medecin_patiente_vertical.jpg" alt="Médecin avec patiente" class="img-fill">
+                </div>
 
-    try {
-      const res = await API.post('/api/auth/login', {
-        email: document.getElementById('login-email').value,
-        mot_de_passe: document.getElementById('login-password').value
-      });
-      Auth.saveSession(res.data);
-      window.location.href = 'dashboard.html';
-    } catch (err) {
-      document.getElementById('login-error').textContent = err.message;
-      document.getElementById('login-error').style.display = 'block';
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = '<span>Se connecter</span>';
-    }
-  }
+                <!-- Right Content -->
+                <div class="about-content">
+                    <span class="section-label">À propos de nous</span>
+                    <h2 class="section-title">Des services médicaux fiables centrés sur votre sécurité, votre confort et votre guérison à Béjaïa.</h2>
+                    <a href="#" class="btn-primary-dark">En savoir plus</a>
 
-  async function doRegister(e) {
-    e.preventDefault();
-    const btn = document.getElementById('btn-register');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span>';
-    document.getElementById('register-error').style.display = 'none';
+                    <div class="about-details">
+                        <!-- List -->
+                        <div class="about-list">
+                            <div class="list-item">
+                                <span class="item-num">01</span>
+                                <span class="item-text">Soins médicaux de confiance</span>
+                                <i data-lucide="arrow-up-right" class="item-icon"></i>
+                            </div>
+                            <div class="list-item">
+                                <span class="item-num">02</span>
+                                <span class="item-text">Traitement centré sur le patient</span>
+                                <i data-lucide="arrow-up-right" class="item-icon"></i>
+                            </div>
+                            <div class="list-item">
+                                <span class="item-num">03</span>
+                                <span class="item-text">Orientation médicale experte</span>
+                                <i data-lucide="arrow-up-right" class="item-icon"></i>
+                            </div>
+                            <div class="list-item">
+                                <span class="item-num">04</span>
+                                <span class="item-text">Résultats de santé durables</span>
+                                <i data-lucide="arrow-up-right" class="item-icon"></i>
+                            </div>
+                        </div>
 
-    try {
-      const res = await API.post('/api/auth/register', {
-        nom: document.getElementById('reg-nom').value,
-        prenom: document.getElementById('reg-prenom').value,
-        email: document.getElementById('reg-email').value,
-        date_naissance: document.getElementById('reg-dob').value,
-        sexe: document.getElementById('reg-sexe').value,
-        telephone: document.getElementById('reg-tel').value,
-        mot_de_passe: document.getElementById('reg-password').value
-      });
-      Auth.saveSession(res.data);
-      window.location.href = 'dashboard.html';
-    } catch (err) {
-      document.getElementById('register-error').textContent = err.message;
-      document.getElementById('register-error').style.display = 'block';
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = '<span>Créer mon compte patient</span>';
-    }
-  }
-</script>
+                        <!-- Small Image & Text -->
+                        <div class="about-sub-content">
+                            <div class="about-image-small">
+                                <img src="assets/medecin_enfant_vertical.jpg" alt="Pédiatrie" class="img-fill">
+                            </div>
+                            <p class="about-sub-text">
+                                Une prise en charge d'exception alliant innovation, empathie et excellence clinique pour tous les âges.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <div class="services-header">
+                <span class="section-label">Nos Services</span>
+                <h2 class="section-title">Une gamme complète de soins médicaux pour vous</h2>
+            </div>
+
+            <div class="services-slider-container">
+                <div class="services-track">
+                    <!-- Card 1 -->
+                    <div class="service-card">
+                        <div class="card-image">
+                            <img src="assets/medecin_vertical.jpg" alt="Service médical">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-label">Services Médicaux</span>
+                            <h3 class="card-title">Solutions de santé pour chaque étape de la vie</h3>
+                            <ul class="card-list">
+                                <li><span>+</span> Soins médicaux primaires</li>
+                                <li><span>+</span> Consultations spécialisées</li>
+                                <li><span>+</span> Services de santé préventifs</li>
+                            </ul>
+                            <a href="#" class="read-more">En savoir plus <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="service-card">
+                        <div class="card-image">
+                            <img src="assets/medecin_patiente_vertical.jpg" alt="Soins personnalisés">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-label">Soins de Santé</span>
+                            <h3 class="card-title">Prise en charge médicale personnalisée</h3>
+                            <ul class="card-list">
+                                <li><span>+</span> Médecine générale</li>
+                                <li><span>+</span> Soins spécialisés avancés</li>
+                                <li><span>+</span> Prévention santé continue</li>
+                            </ul>
+                            <a href="#" class="read-more">En savoir plus <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="service-card">
+                        <div class="card-image">
+                            <img src="assets/medecin_enfant_vertical.jpg" alt="Pédiatrie et suivi">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-label">Accompagnement</span>
+                            <h3 class="card-title">Une équipe dédiée à votre bien-être</h3>
+                            <ul class="card-list">
+                                <li><span>+</span> Suivi pédiatrique complet</li>
+                                <li><span>+</span> Conseils santé & nutrition</li>
+                                <li><span>+</span> Accompagnement bien-être</li>
+                            </ul>
+                            <a href="#" class="read-more">En savoir plus <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Duplicate for infinite effect -->
+                    <div class="service-card">
+                        <div class="card-image">
+                            <img src="assets/medecin_vertical.jpg" alt="Service médical">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-label">Services Médicaux</span>
+                            <h3 class="card-title">Solutions de santé pour chaque étape de la vie</h3>
+                            <ul class="card-list">
+                                <li><span>+</span> Soins médicaux primaires</li>
+                                <li><span>+</span> Consultations spécialisées</li>
+                                <li><span>+</span> Services de santé préventifs</li>
+                            </ul>
+                            <a href="#" class="read-more">En savoir plus <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="card-image">
+                            <img src="assets/medecin_patiente_vertical.jpg" alt="Soins personnalisés">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-label">Soins de Santé</span>
+                            <h3 class="card-title">Prise en charge médicale personnalisée</h3>
+                            <ul class="card-list">
+                                <li><span>+</span> Médecine générale</li>
+                                <li><span>+</span> Soins spécialisés avancés</li>
+                                <li><span>+</span> Prévention santé continue</li>
+                            </ul>
+                            <a href="#" class="read-more">En savoir plus <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Counter Section -->
+        <section class="stats-section" id="why-us">
+            <div class="stats-container">
+                <div class="stats-header">
+                    <span class="section-label">Pourquoi nous choisir</span>
+                    <h2 class="section-title">Des solutions médicales avancées pour un suivi personnalisé et des résultats optimaux à Béjaïa.</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <!-- Stat 1 -->
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i data-lucide="award"></i>
+                        </div>
+                        <div class="stat-number"><span class="counter" data-target="25">0</span>+</div>
+                        <h4 class="stat-title">Années d'excellence</h4>
+                        <p class="stat-desc">Une expertise médicale reconnue et certifiée.</p>
+                    </div>
+
+                    <!-- Stat 2 -->
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i data-lucide="check-circle-2"></i>
+                        </div>
+                        <div class="stat-number"><span class="counter" data-target="80">0</span>%</div>
+                        <h4 class="stat-title">Réussite des traitements</h4>
+                        <p class="stat-desc">Des résultats concrets pour nos patients.</p>
+                    </div>
+
+                    <!-- Stat 3 -->
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i data-lucide="smile"></i>
+                        </div>
+                        <div class="stat-number"><span class="counter" data-target="1000">0</span>+</div>
+                        <h4 class="stat-title">Patients satisfaits</h4>
+                        <p class="stat-desc">La satisfaction de nos patients est notre priorité.</p>
+                    </div>
+
+                    <!-- Stat 4 -->
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i data-lucide="stethoscope"></i>
+                        </div>
+                        <div class="stat-number"><span class="counter" data-target="42">0</span>+</div>
+                        <h4 class="stat-title">Spécialités médicales</h4>
+                        <p class="stat-desc">Un large éventail de soins spécialisés.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parallax Info Section -->
+        <section class="parallax-section">
+            <div class="parallax-bg" style="background-image: url('assets/medecin_enfant_vertical.jpg');"></div>
+            <div class="parallax-content">
+                <div class="info-card">
+                    <!-- Left: Facility Info -->
+                    <div class="info-left">
+                        <h3 class="info-title">Notre Cabinet</h3>
+                        <div class="info-details">
+                            <div class="info-row">
+                                <span class="info-label">Clinic name :</span>
+                                <span class="info-value">Medicaly</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Rendez-vous :</span>
+                                <span class="info-value">+213 (0) 34 12 34 56</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Support email :</span>
+                                <span class="info-value">contact@medicaly.dz</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Hours -->
+                    <div class="info-right">
+                        <h3 class="info-title">Horaires d'ouverture</h3>
+                        <div class="hours-details">
+                            <div class="hour-row">
+                                <span class="hour-day">Samedi — Jeudi :</span>
+                                <span class="hour-time">08:00 AM — 05:00 PM</span>
+                            </div>
+                            <div class="hour-row">
+                                <span class="hour-day">Vendredi :</span>
+                                <span class="hour-time">Fermé</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee Section -->
+        <section class="marquee-section">
+            <div class="marquee-content">
+                <div class="marquee-track">
+                    <span>Bilans de santé <i class="asterisk">*</i></span>
+                    <span>Soins avancés <i class="asterisk">*</i></span>
+                    <span>Expertise médicale <i class="asterisk">*</i></span>
+                    <span>Technologie moderne <i class="asterisk">*</i></span>
+                    <span>Suivi personnalisé <i class="asterisk">*</i></span>
+                    <!-- Duplicate for infinite loop -->
+                    <span>Bilans de santé <i class="asterisk">*</i></span>
+                    <span>Soins avancés <i class="asterisk">*</i></span>
+                    <span>Expertise médicale <i class="asterisk">*</i></span>
+                    <span>Technologie moderne <i class="asterisk">*</i></span>
+                    <span>Suivi personnalisé <i class="asterisk">*</i></span>
+                </div>
+            </div>
+        </section>
+        <!-- Doctor Showcase Section -->
+        <section class="doctor-showcase">
+            <div class="doctor-container">
+                <!-- Left: Large Image -->
+                <div class="doctor-main-image">
+                    <img src="assets/medecin_vertical.jpg" alt="Dr. Mansouri en consultation" class="img-fill">
+                </div>
+
+                <!-- Right: Info Cards -->
+                <div class="doctor-cards">
+                    <!-- Top: Quote Card -->
+                    <div class="quote-card">
+                        <p class="quote-text">
+                            Spécialiste passionné en médecine interne, dédié à fournir des diagnostics précis et un traitement holistique centré sur le bien-être de chaque patient.
+                        </p>
+                        <div class="quote-signature">
+                            <span class="sig-name">Dr. Salim Mansouri</span>
+                            <span class="sig-title">Médecin Interniste</span>
+                        </div>
+                        <div class="quote-icon-bg">
+                            <i data-lucide="heart-handshake"></i>
+                        </div>
+                    </div>
+
+                    <!-- Bottom: Experience Card -->
+                    <div class="experience-card">
+                        <div class="exp-number">25+</div>
+                        <p class="exp-text">
+                            Plus de 25 ans d'expérience dans le diagnostic de pathologies complexes avec une approche humaine et personnalisée.
+                        </p>
+                        <div class="exp-image">
+                            <!-- Placeholder or icon for medical/pills -->
+                            <i data-lucide="pill" style="width: 80px; height: 80px; opacity: 0.1; position: absolute; right: -10px; bottom: -10px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Specialties Section -->
+        <section class="specialties">
+            <div class="specialties-container">
+                <div class="specialties-grid">
+                    <!-- Specialty 1 -->
+                    <div class="specialty-item">
+                        <div class="specialty-icon">
+                            <i data-lucide="hand-heart"></i>
+                        </div>
+                        <h3 class="specialty-title">Dermatologie</h3>
+                        <p class="specialty-desc">Traitement médical avancé pour les affections cutanées, les allergies et la santé de la peau à long terme.</p>
+                    </div>
+
+                    <!-- Specialty 2 -->
+                    <div class="specialty-item">
+                        <div class="specialty-icon">
+                            <i data-lucide="heart-pulse"></i>
+                        </div>
+                        <h3 class="specialty-title">Cardiologie</h3>
+                        <p class="specialty-desc">Soins cardiaques experts avec diagnostics avancés et traitements spécialisés pour votre cœur.</p>
+                    </div>
+
+                    <!-- Specialty 3 -->
+                    <div class="specialty-item">
+                        <div class="specialty-icon">
+                            <i data-lucide="activity"></i>
+                        </div>
+                        <h3 class="specialty-title">Orthopédie</h3>
+                        <p class="specialty-desc">Traitement spécialisé pour les os, les articulations et les problèmes de mobilité et de posture.</p>
+                    </div>
+
+                    <!-- Specialty 4 -->
+                    <div class="specialty-item">
+                        <div class="specialty-icon">
+                            <i data-lucide="brain"></i>
+                        </div>
+                        <h3 class="specialty-title">Neurologie</h3>
+                        <p class="specialty-desc">Soins avancés pour le cerveau et les conditions du système nerveux avec un suivi expert.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Facilities Section -->
+        <section class="facilities">
+            <div class="facilities-container">
+                <div class="facilities-grid">
+                    <!-- Image 1 -->
+                    <div class="facility-item">
+                        <img src="assets/local_1.jpg" alt="Local 1" class="img-fill">
+                    </div>
+
+                    <!-- Image 2 (Main with Card) -->
+                    <div class="facility-item large">
+                        <img src="assets/local_2.jpg" alt="Local 2" class="img-fill">
+                        <div class="address-card">
+                            <div class="address-item">
+                                <i data-lucide="map-pin"></i>
+                                <div class="address-info">
+                                    <span class="addr-label">Adresse</span>
+                                    <span class="addr-value">Cité 600 logements, Béjaïa, Algérie</span>
+                                </div>
+                            </div>
+                            <div class="address-item">
+                                <i data-lucide="mail"></i>
+                                <div class="address-info">
+                                <span class="addr-label">Contactez-nous</span>
+                                <span class="addr-value">contact@medicaly.dz</span>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image 3 -->
+                    <div class="facility-item">
+                        <img src="assets/local_3.jpg" alt="Local 3" class="img-fill">
+                    </div>
+
+                    <!-- Image 4 -->
+                    <div class="facility-item">
+                        <img src="assets/local_4.jpg" alt="Local 4" class="img-fill">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <div class="testimonials-container">
+                <div class="testimonials-header">
+                    <span class="section-label">Témoignages</span>
+                    <h2 class="section-title">Expériences de nos patients avec nos services médicaux</h2>
+                </div>
+
+                <div class="testimonials-content">
+                    <!-- Sticky Background Text -->
+                    <div class="sticky-bg-text">
+                        <span>Nos patients sont heureux <br> et le disent</span>
+                    </div>
+
+                    <!-- Scrolling Cards -->
+                    <div class="testimonials-cards-container">
+                        <!-- Card 1 -->
+                        <div class="testimonial-card card-left">
+                            <div class="stars">★★★★★</div>
+                            <p class="testi-text">
+                                "Excellente expérience ! La prise de rendez-vous a été fluide, le personnel est ponctuel et très professionnel. Le cabinet est d'une propreté irréprochable."
+                            </p>
+                            <div class="testi-author">
+                                <div class="author-info">
+                                    <span class="author-name">Karima B.</span>
+                                </div>
+                                <div class="quote-icon">
+                                    <i data-lucide="quote"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="testimonial-card card-right">
+                            <div class="stars">★★★★★</div>
+                            <p class="testi-text">
+                                "Une prise en charge médicale de haut niveau. Les diagnostics sont précis et le suivi est vraiment personnalisé. Je me sens en totale confiance à Béjaïa."
+                            </p>
+                            <div class="testi-author">
+                                <div class="author-info">
+                                    <span class="author-name">Ahmed T.</span>
+                                </div>
+                                <div class="quote-icon">
+                                    <i data-lucide="quote"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="testimonial-card card-left">
+                            <div class="stars">★★★★★</div>
+                            <p class="testi-text">
+                                "Spécialistes à l'écoute et très humains. On sent une réelle expertise. Le plateau technique est moderne, ce qui est rare de trouver dans la région."
+                            </p>
+                            <div class="testi-author">
+                                <div class="author-info">
+                                    <span class="author-name">Sofia L.</span>
+                                </div>
+                                <div class="quote-icon">
+                                    <i data-lucide="quote"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-top">
+                    <!-- Column 1: Contact -->
+                    <div class="footer-col">
+                        <span class="footer-label">Contactez-nous</span>
+                        <a href="mailto:info@medicaly.dz" class="footer-link large">info@medicaly.dz</a>
+                        <a href="tel:+21334123456" class="footer-link large">+213 (0) 34 12 34 56</a>
+                    </div>
+
+                    <!-- Column 2: Main Pages -->
+                    <div class="footer-col">
+                        <span class="footer-label">Pages</span>
+                        <ul class="footer-list">
+                            <li><a href="#">Accueil</a></li>
+                            <li><a href="#about">À propos</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="login.html">Espace Patient</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 3: Utility -->
+                    <div class="footer-col">
+                        <span class="footer-label">Utilitaires</span>
+                        <ul class="footer-list">
+                            <li><a href="#">Mentions légales</a></li>
+                            <li><a href="#">Confidentialité</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 4: Address -->
+                    <div class="footer-col">
+                        <span class="footer-label">Adresse</span>
+                        <p class="footer-text">Cité 600 logements,<br>Béjaïa, Algérie</p>
+                    </div>
+                </div>
+
+                <!-- Animated Logo Name -->
+                <div class="footer-big-name">
+                    <span class="name-base">Medica</span><span class="name-anim"><span>ly</span></span>
+                </div>
+
+                <div class="footer-bottom">
+                    <p>© 2026 Medicaly. Tous droits réservés.</p>
+                    <div class="footer-credits">
+                        <span>Design by Antigravity</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 1);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        // Intersection Observer for counters
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const statsSection = document.querySelector('.stats-grid');
+        if (statsSection) observer.observe(statsSection);
+
+        // Footer Animation Observer
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelector('.name-anim span').style.animation = 'revealUp 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const footerBigName = document.querySelector('.footer-big-name');
+        if (footerBigName) {
+            // Remove the default animation from CSS and let JS handle it
+            footerBigName.querySelector('.name-anim span').style.animation = 'none';
+            footerObserver.observe(footerBigName);
+        }
+    </script>
 </body>
 </html>

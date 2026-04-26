@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicaly — Connexion & Inscription</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/landing.css">
+    <style>
+        :root {
+            --auth-bg: #f8fafc;
+            --auth-primary: #003366;
+            --auth-accent: #3b82f6;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .auth-page {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .auth-left {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background-color: var(--white);
+            overflow-y: auto;
+        }
+
+        .auth-right {
+            flex: 1;
+            position: relative;
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .auth-right {
+                display: block;
+            }
+        }
+
+        .auth-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 60px;
+            left: 60px;
+            right: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .image-overlay h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .image-overlay p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .auth-form-wrapper {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .auth-header {
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .auth-header h1 {
+            font-size: 2rem;
+            color: var(--auth-primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .auth-header p {
+            color: var(--text-muted);
+        }
+
+        .logo-small {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: var(--auth-primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            padding: 12px 0;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--auth-primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--auth-primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--auth-primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--auth-accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--auth-primary);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-auth:hover {
+            background-color: #002244;
+            transform: translateY(-2px);
+        }
+
+        .btn-auth:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            background-color: #fee2e2;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 30px;
+            transition: color 0.3s;
+        }
+
+        .back-home:hover {
+            color: var(--auth-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-page">
+        <!-- Left: Form -->
+        <div class="auth-left">
+            <div class="auth-form-wrapper">
+                <a href="index.html" class="logo-small">
+                    <i data-lucide="hospital"></i> Medicaly
+                </a>
+
+                <div class="auth-header">
+                    <h1 id="auth-title">Bienvenue</h1>
+                    <p id="auth-subtitle">Connectez-vous pour accéder à votre espace santé.</p>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="login" onclick="switchTab('login')">Connexion</button>
+                    <button class="tab-btn" data-tab="register" onclick="switchTab('register')">Inscription</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="tab-login">
+                    <div id="login-error" class="error-msg"></div>
+                    <form id="form-login" onsubmit="doLogin(event)">
+                        <div class="form-group">
+                            <label>Adresse Email</label>
+                            <input type="email" id="login-email" class="form-control" placeholder="nom@exemple.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mot de passe</label>
+                            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn-auth" id="btn-login">
+                            <span>Se connecter</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div id="tab-register" style="display:none">
+                    <div id="register-error" class="error-msg"></div>
+                    <form id="form-register" onsubmit="doRegister(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nom</label>
+                                <input type="text" id="reg-nom" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Prénom</label>
+                                <input type="text" id="reg-prenom" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse Email</label>
+                            <input type="email" id="reg-email" class="form-control" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date de naissance</label>
+                                <input type="date" id="reg-dob" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Sexe</label>
+                                <select id="reg-sexe" class="form-control" style="background:white" required>
+                                    <option value="M">Masculin</option>
+                                    <option value="F">Féminin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Téléphone</label>
+                            <input type="tel" id="reg-tel" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Mot de passe</label>
+                            <input type="password" id="reg-password" class="form-control" minlength="8" required>
+                        </div>
+                        <button type="submit" class="btn-auth" id="btn-register">
+                            <span>Créer mon compte</span>
+                        </button>
+                    </form>
+                </div>
+
+                <a href="index.html" class="back-home">
+                    <i data-lucide="arrow-left"></i> Retour à l'accueil
+                </a>
+            </div>
+        </div>
+
+        <!-- Right: Image -->
+        <div class="auth-right">
+            <img src="assets/medecin_age.jpg" alt="Medicaly Background">
+            <div class="image-overlay">
+                <h2>L'excellence médicale à Béjaïa</h2>
+                <p>Medicaly vous offre une prise en charge moderne et humaine pour un suivi santé irréprochable.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Rediriger si déjà connecté
+        if (Auth.isLoggedIn()) window.location.href = 'dashboard.html';
+
+        // Gérer le changement d'onglet via URL (?tab=register)
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetTab = urlParams.get('tab');
+        if (targetTab === 'register') {
+            setTimeout(() => switchTab('register'), 50);
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.tab === tab);
+            });
+            
+            document.getElementById('tab-login').style.display    = tab === 'login'    ? '' : 'none';
+            document.getElementById('tab-register').style.display = tab === 'register' ? '' : 'none';
+            
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+            
+            if (tab === 'login') {
+                title.textContent = 'Bienvenue';
+                subtitle.textContent = 'Connectez-vous pour accéder à votre espace santé.';
+            } else {
+                title.textContent = 'Créer un compte';
+                subtitle.textContent = 'Rejoignez Medicaly pour un meilleur suivi médical.';
+            }
+        }
+
+        async function doLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-login');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div>';
+            document.getElementById('login-error').style.display = 'none';
+
+            try {
+                const res = await API.post('/api/auth/login', {
+                    email: document.getElementById('login-email').value,
+                    mot_de_passe: document.getElementById('login-password').value
+                });
+                Auth.saveSession(res.data);
+                window.location.href = 'dashboard.html';
+            } catch (err) {
+                const errDiv = document.getElementById('login-error');
+                errDiv.textContent = err.message;
+                errDiv.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        async function doRegister(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-register');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<div class="spinner"></div>';
+            document.getElementById('register-error').style.display = 'none';
+
+            try {
+                const res = await API.post('/api/auth/register', {
+                    nom: document.getElementById('reg-nom').value,
+                    prenom: document.getElementById('reg-prenom').value,
+                    email: document.getElementById('reg-email').value,
+                    date_naissance: document.getElementById('reg-dob').value,
+                    sexe: document.getElementById('reg-sexe').value,
+                    telephone: document.getElementById('reg-tel').value,
+                    mot_de_passe: document.getElementById('reg-password').value
+                });
+                Auth.saveSession(res.data);
+                window.location.href = 'dashboard.html';
+            } catch (err) {
+                const errDiv = document.getElementById('register-error');
+                errDiv.textContent = err.message;
+                errDiv.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,100 +1,231 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mon Profil — Cabinet Médical</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil — Medicaly</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        .profile-header-card {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            border-radius: var(--radius);
+            padding: 40px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .profile-avatar-large {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .profile-title-info h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .profile-title-info .role-badge-white {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .section-header i {
+            color: var(--accent);
+        }
+
+        .section-header h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+    </style>
 </head>
 <body>
 <div class="app-layout">
-  <aside class="sidebar">
-    <div class="sidebar-header"><div class="brand"><span>🏥</span> Cabinet Médical</div></div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span> Tableau de bord</a>
-      <a href="patients.html" class="nav-item" data-role="admin,medecin,secretaire"><span class="nav-icon">👤</span> Patients</a>
-      <a href="rendez-vous.html" class="nav-item"><span class="nav-icon">📅</span> Rendez-vous</a>
-      <a href="consultations.html" class="nav-item"><span class="nav-icon">🩺</span> Consultations</a>
-      <a href="ordonnances.html" class="nav-item"><span class="nav-icon">💊</span> Ordonnances</a>
-      <a href="utilisateurs.html" class="nav-item" data-role="admin"><span class="nav-icon">👥</span> Utilisateurs</a>
-      <a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span> Notifications</a>
-      <a href="profil.html" class="nav-item active"><span class="nav-icon">👤</span> Mon profil</a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="user-card">
-        <div class="user-avatar" id="sb-user-avatar">?</div>
-        <div class="user-info">
-          <div class="user-name" id="sb-user-name">—</div>
-          <div class="user-role" id="sb-user-role">—</div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <i data-lucide="hospital"></i> Medicaly
+            </div>
         </div>
-      </div>
-      <button onclick="logout()" class="btn btn-ghost btn-sm w-100 mt-2" style="justify-content:center">🚪 Déconnexion</button>
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Menu Principal</div>
+            <a href="dashboard.html" class="nav-item" data-page="dashboard">
+                <span class="nav-icon"><i data-lucide="layout-dashboard"></i></span> Tableau de bord
+            </a>
+            <a href="patients.html" class="nav-item" data-page="patients" data-role="admin,medecin,secretaire">
+                <span class="nav-icon"><i data-lucide="users"></i></span> Patients
+            </a>
+            <a href="rendez-vous.html" class="nav-item" data-page="rendez-vous">
+                <span class="nav-icon"><i data-lucide="calendar"></i></span> Rendez-vous
+            </a>
+            <a href="consultations.html" class="nav-item" data-page="consultations" data-role="admin,medecin,patient">
+                <span class="nav-icon"><i data-lucide="stethoscope"></i></span> Consultations
+            </a>
+            <a href="ordonnances.html" class="nav-item" data-page="ordonnances" data-role="admin,medecin,patient">
+                <span class="nav-icon"><i data-lucide="pill"></i></span> Ordonnances
+            </a>
+
+            <div class="nav-section-title" data-role="admin">Administration</div>
+            <a href="utilisateurs.html" class="nav-item" data-page="utilisateurs" data-role="admin">
+                <span class="nav-icon"><i data-lucide="user-cog"></i></span> Utilisateurs
+            </a>
+            <a href="admin.html" class="nav-item" data-page="admin" data-role="admin">
+                <span class="nav-icon"><i data-lucide="settings"></i></span> Paramètres
+            </a>
+
+            <div class="nav-section-title">Personnel</div>
+            <a href="notifications.html" class="nav-item" data-page="notifications">
+                <span class="nav-icon"><i data-lucide="bell"></i></span> Notifications
+            </a>
+            <a href="profil.html" class="nav-item active" data-page="profil">
+                <span class="nav-icon"><i data-lucide="user"></i></span> Mon profil
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar" id="sb-user-avatar">?</div>
+                <div class="user-info">
+                    <div class="user-name" id="sb-user-name">...</div>
+                    <div class="user-role" id="sb-user-role">...</div>
+                </div>
+            </div>
+            <button onclick="logout()" class="logout-btn">
+                <i data-lucide="log-out"></i> Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <h2>Paramètres du Compte</h2>
+            </div>
+            <div class="topbar-right">
+                <button class="notif-btn" onclick="location.href='notifications.html'">
+                    <i data-lucide="bell"></i>
+                    <span class="badge-notif" id="notif-badge" style="display:none">0</span>
+                </button>
+                <div class="user-greeting">
+                    <span id="top-user-name" style="font-weight:700">Utilisateur</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="page-content">
+            <div class="profile-header-card">
+                <div class="profile-avatar-large" id="p-avatar-circle">?</div>
+                <div class="profile-title-info">
+                    <h1 id="p-full-name">Chargement...</h1>
+                    <div class="role-badge-white" id="p-role-badge">
+                        <i data-lucide="shield"></i> <span id="p-role-text">Rôle</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-grid">
+                <!-- Info Perso -->
+                <div class="card">
+                    <div class="card-body" style="padding:40px">
+                        <div class="section-header">
+                            <i data-lucide="user"></i>
+                            <h3>Informations personnelles</h3>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nom</label>
+                                <input type="text" id="p-nom" class="form-control" placeholder="Votre nom">
+                            </div>
+                            <div class="form-group">
+                                <label>Prénom</label>
+                                <input type="text" id="p-prenom" class="form-control" placeholder="Votre prénom">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom:20px">
+                            <label>Adresse Email</label>
+                            <input type="email" id="p-email" class="form-control" placeholder="votre@email.com">
+                        </div>
+                        <div class="form-group" style="margin-bottom:30px">
+                            <label>Numéro de téléphone</label>
+                            <input type="tel" id="p-telephone" class="form-control" placeholder="0550 00 00 00">
+                        </div>
+                        <button class="btn btn-primary" onclick="saveProfil()" style="width:100%">
+                            <i data-lucide="save"></i> Enregistrer les modifications
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sécurité -->
+                <div class="card">
+                    <div class="card-body" style="padding:40px">
+                        <div class="section-header">
+                            <i data-lucide="lock"></i>
+                            <h3>Sécurité & Mot de passe</h3>
+                        </div>
+                        <div class="form-group" style="margin-bottom:20px">
+                            <label>Mot de passe actuel</label>
+                            <input type="password" id="p-old-mdp" class="form-control" placeholder="••••••••">
+                        </div>
+                        <div class="form-group" style="margin-bottom:20px">
+                            <label>Nouveau mot de passe</label>
+                            <input type="password" id="p-new-mdp" class="form-control" placeholder="6 caractères min.">
+                        </div>
+                        <div class="form-group" style="margin-bottom:30px">
+                            <label>Confirmer le mot de passe</label>
+                            <input type="password" id="p-confirm-mdp" class="form-control" placeholder="Confirmer">
+                        </div>
+                        <button class="btn btn-outline-primary" onclick="changeMdp()" style="width:100%">
+                            <i data-lucide="shield-check"></i> Mettre à jour le mot de passe
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-  </aside>
-
-  <div class="main-content">
-    <header class="topbar">
-      <div class="topbar-left"><h2>Mon Profil</h2></div>
-      <div class="topbar-right">
-        <button class="notif-btn" onclick="location.href='notifications.html'">🔔<span class="badge-notif" id="notif-badge" style="display:none">0</span></button>
-        <span id="top-user-name" style="font-weight:600;font-size:.85rem"></span>
-      </div>
-    </header>
-
-    <main class="page-content">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
-
-        <!-- Informations personnelles -->
-        <div class="card">
-          <div class="card-header"><h4>Informations personnelles</h4></div>
-          <div class="card-body">
-            <div class="form-group">
-              <label class="form-label">Nom</label>
-              <input type="text" id="p-nom" class="form-control">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Prénom</label>
-              <input type="text" id="p-prenom" class="form-control">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Email</label>
-              <input type="email" id="p-email" class="form-control">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Téléphone</label>
-              <input type="text" id="p-telephone" class="form-control">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Rôle</label>
-              <input type="text" id="p-role" class="form-control" readonly style="background:var(--bg)">
-            </div>
-            <button class="btn btn-primary" onclick="saveProfil()">💾 Mettre à jour</button>
-          </div>
-        </div>
-
-        <!-- Changer mot de passe -->
-        <div class="card">
-          <div class="card-header"><h4>Changer le mot de passe</h4></div>
-          <div class="card-body">
-            <div class="form-group">
-              <label class="form-label">Mot de passe actuel</label>
-              <input type="password" id="p-old-mdp" class="form-control" autocomplete="current-password">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Nouveau mot de passe</label>
-              <input type="password" id="p-new-mdp" class="form-control" autocomplete="new-password">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Confirmer</label>
-              <input type="password" id="p-confirm-mdp" class="form-control" autocomplete="new-password">
-            </div>
-            <button class="btn btn-primary" onclick="changeMdp()">🔒 Modifier</button>
-          </div>
-        </div>
-
-      </div>
-    </main>
-  </div>
 </div>
 
 <div id="toast-container"></div>
@@ -102,5 +233,12 @@
 <script src="js/auth.js"></script>
 <script src="js/app.js"></script>
 <script src="js/profil.js"></script>
+<script>
+    if (window.lucide) lucide.createIcons();
+    const user = Auth.getUser();
+    if(user && document.getElementById('top-user-name')) {
+        document.getElementById('top-user-name').textContent = user.prenom;
+    }
+</script>
 </body>
 </html>

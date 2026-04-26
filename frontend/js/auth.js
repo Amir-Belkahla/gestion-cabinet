@@ -23,7 +23,7 @@ const Auth = {
 
   requireLogin() {
     if (!this.isLoggedIn()) {
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
       return false;
     }
     return true;
@@ -39,7 +39,7 @@ const Auth = {
       API.post('/api/auth/logout', { refresh_token: rt }).catch(() => {});
     }
     localStorage.clear();
-    window.location.href = 'index.html';
+    window.location.href = 'login.html';
   },
 
   async refreshMe() {

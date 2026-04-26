@@ -1,114 +1,227 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consultations — Cabinet Médical</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultations — Medicaly</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        .consult-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 4px solid var(--accent);
+            transition: transform 0.2s;
+        }
+
+        .consult-card:hover {
+            transform: translateX(5px);
+        }
+
+        .consult-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .consult-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .consult-patient {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .consult-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .consult-info-block label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .consult-info-block p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: #eef2ff;
+            color: var(--accent);
+        }
+    </style>
 </head>
 <body>
 <div class="app-layout">
-  <aside class="sidebar">
-    <div class="sidebar-header"><div class="brand"><span>🏥</span> Cabinet Médical</div></div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span> Tableau de bord</a>
-      <a href="patients.html" class="nav-item" data-role="admin,medecin,secretaire"><span class="nav-icon">👤</span> Patients</a>
-      <a href="rendez-vous.html" class="nav-item"><span class="nav-icon">📅</span> Rendez-vous</a>
-      <a href="consultations.html" class="nav-item active"><span class="nav-icon">🩺</span> Consultations</a>
-      <a href="ordonnances.html" class="nav-item"><span class="nav-icon">💊</span> Ordonnances</a>
-      <a href="utilisateurs.html" class="nav-item" data-role="admin"><span class="nav-icon">👥</span> Utilisateurs</a>
-      <a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span> Notifications</a>
-      <a href="profil.html" class="nav-item"><span class="nav-icon">👤</span> Mon profil</a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="user-card">
-        <div class="user-avatar" id="sb-user-avatar">?</div>
-        <div class="user-info">
-          <div class="user-name" id="sb-user-name">—</div>
-          <div class="user-role" id="sb-user-role">—</div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <i data-lucide="hospital"></i> Medicaly
+            </div>
         </div>
-      </div>
-      <button onclick="logout()" class="btn btn-ghost btn-sm w-100 mt-2" style="justify-content:center">🚪 Déconnexion</button>
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Menu Principal</div>
+            <a href="dashboard.html" class="nav-item" data-page="dashboard">
+                <span class="nav-icon"><i data-lucide="layout-dashboard"></i></span> Tableau de bord
+            </a>
+            <a href="patients.html" class="nav-item" data-page="patients" data-role="admin,medecin,secretaire">
+                <span class="nav-icon"><i data-lucide="users"></i></span> Patients
+            </a>
+            <a href="rendez-vous.html" class="nav-item" data-page="rendez-vous">
+                <span class="nav-icon"><i data-lucide="calendar"></i></span> Rendez-vous
+            </a>
+            <a href="consultations.html" class="nav-item active" data-page="consultations" data-role="admin,medecin,patient">
+                <span class="nav-icon"><i data-lucide="stethoscope"></i></span> Consultations
+            </a>
+            <a href="ordonnances.html" class="nav-item" data-page="ordonnances" data-role="admin,medecin,patient">
+                <span class="nav-icon"><i data-lucide="pill"></i></span> Ordonnances
+            </a>
+
+            <div class="nav-section-title" data-role="admin">Administration</div>
+            <a href="utilisateurs.html" class="nav-item" data-page="utilisateurs" data-role="admin">
+                <span class="nav-icon"><i data-lucide="user-cog"></i></span> Utilisateurs
+            </a>
+            <a href="admin.html" class="nav-item" data-page="admin" data-role="admin">
+                <span class="nav-icon"><i data-lucide="settings"></i></span> Paramètres
+            </a>
+
+            <div class="nav-section-title">Personnel</div>
+            <a href="notifications.html" class="nav-item" data-page="notifications">
+                <span class="nav-icon"><i data-lucide="bell"></i></span> Notifications
+            </a>
+            <a href="profil.html" class="nav-item" data-page="profil">
+                <span class="nav-icon"><i data-lucide="user"></i></span> Mon profil
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar" id="sb-user-avatar">?</div>
+                <div class="user-info">
+                    <div class="user-name" id="sb-user-name">...</div>
+                    <div class="user-role" id="sb-user-role">...</div>
+                </div>
+            </div>
+            <button onclick="logout()" class="logout-btn">
+                <i data-lucide="log-out"></i> Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <h2>Suivi des Consultations</h2>
+            </div>
+            <div class="topbar-right">
+                <button class="notif-btn" onclick="location.href='notifications.html'">
+                    <i data-lucide="bell"></i>
+                    <span class="badge-notif" id="notif-badge" style="display:none">0</span>
+                </button>
+                <div class="user-greeting">
+                    <span id="top-user-name" style="font-weight:700">Utilisateur</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="page-content">
+            <div class="toolbar">
+                <div class="section-title">
+                    <p style="color:var(--text-muted); font-size:0.9rem">Historique des visites médicales</p>
+                </div>
+                <button class="btn btn-primary" onclick="openConsultModal()" data-role="medecin">
+                    <i data-lucide="plus"></i> Nouvelle Consultation
+                </button>
+            </div>
+
+            <div id="consultations-list">
+                <!-- Les cartes de consultation seront injectées ici -->
+                <div style="text-align:center;padding:100px"><div class="spinner"></div></div>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+        </main>
     </div>
-  </aside>
-
-  <div class="main-content">
-    <header class="topbar">
-      <div class="topbar-left"><h2>Consultations</h2></div>
-      <div class="topbar-right">
-        <button class="notif-btn" onclick="location.href='notifications.html'">🔔<span class="badge-notif" id="notif-badge" style="display:none">0</span></button>
-        <span id="top-user-name" style="font-weight:600;font-size:.85rem"></span>
-      </div>
-    </header>
-
-    <main class="page-content">
-      <div class="toolbar">
-        <div></div>
-        <button class="btn btn-primary" onclick="openConsultModal()" data-role="medecin">
-          ➕ Nouvelle consultation
-        </button>
-      </div>
-
-      <div class="card">
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr><th>Date</th><th>Patient</th><th>Médecin</th><th>Symptômes</th><th>Diagnostic</th><th>Actions</th></tr>
-            </thead>
-            <tbody id="consult-tbody">
-              <tr><td colspan="6"><div class="loading-overlay"><span class="spinner"></span></div></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="pagination" id="pagination"></div>
-      </div>
-    </main>
-  </div>
 </div>
 
 <!-- Modal Consultation -->
 <div class="modal-overlay" id="modal-consult" onclick="closeConsultModal(event)">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h4 id="consult-modal-title">Nouvelle Consultation</h4>
-      <button class="modal-close" onclick="closeConsultModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="consult-id">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Patient <span class="req">*</span></label>
-          <select id="c-patient" class="form-select" required></select>
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="consult-modal-title">Nouvelle Consultation</h3>
+            <button class="btn-icon" onclick="closeConsultModal()"><i data-lucide="x"></i></button>
         </div>
-        <div class="form-group">
-          <label class="form-label">RDV lié (optionnel)</label>
-          <select id="c-rdv" class="form-select">
-            <option value="">Aucun</option>
-          </select>
+        <div class="modal-body">
+            <input type="hidden" id="consult-id">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Patient <span style="color:var(--danger)">*</span></label>
+                    <select id="c-patient" class="form-select" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Rendez-vous associé</label>
+                    <select id="c-rdv" class="form-select">
+                        <option value="">Aucun</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" style="margin-bottom:20px">
+                <label>Date & Heure <span style="color:var(--danger)">*</span></label>
+                <input type="datetime-local" id="c-date" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom:20px">
+                <label>Symptômes signalés</label>
+                <textarea id="c-symptomes" class="form-control" rows="3" style="resize:none" placeholder="Décrivez les symptômes du patient..."></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom:20px">
+                <label>Diagnostic médical</label>
+                <textarea id="c-diagnostic" class="form-control" rows="3" style="resize:none" placeholder="Saisissez le diagnostic..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Observations & Notes internes</label>
+                <textarea id="c-notes" class="form-control" rows="2" style="resize:none" placeholder="Notes additionnelles..."></textarea>
+            </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Date & heure <span class="req">*</span></label>
-        <input type="datetime-local" id="c-date" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Symptômes</label>
-        <textarea id="c-symptomes" class="form-control"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Diagnostic</label>
-        <textarea id="c-diagnostic" class="form-control"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Notes</label>
-        <textarea id="c-notes" class="form-control"></textarea>
-      </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline-primary" onclick="closeConsultModal()">Annuler</button>
+            <button class="btn btn-primary" onclick="saveConsultation()">Enregistrer la consultation</button>
+        </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeConsultModal()">Annuler</button>
-      <button class="btn btn-primary" onclick="saveConsultation()">💾 Enregistrer</button>
-    </div>
-  </div>
 </div>
 
 <div id="toast-container"></div>
@@ -116,5 +229,12 @@
 <script src="js/auth.js"></script>
 <script src="js/app.js"></script>
 <script src="js/consultations.js"></script>
+<script>
+    if (window.lucide) lucide.createIcons();
+    const user = Auth.getUser();
+    if(user && document.getElementById('top-user-name')) {
+        document.getElementById('top-user-name').textContent = user.prenom;
+    }
+</script>
 </body>
 </html>

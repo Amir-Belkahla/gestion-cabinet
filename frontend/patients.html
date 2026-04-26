@@ -1,162 +1,286 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Patients — Cabinet Médical</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients — Medicaly</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .search-container i, 
+        .search-container svg {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-container input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.05);
+        }
+
+        .pagination {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .page-link {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            font-size: 0.9rem;
+            background: white;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-link.active {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        
+        .page-link:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
 <div class="app-layout">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-header"><div class="brand"><span>🏥</span> Cabinet Médical</div></div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="nav-item" data-page="dashboard"><span class="nav-icon">📊</span> Tableau de bord</a>
-      <a href="patients.html" class="nav-item active" data-page="patients"><span class="nav-icon">👤</span> Patients</a>
-      <a href="rendez-vous.html" class="nav-item"><span class="nav-icon">📅</span> Rendez-vous</a>
-      <a href="consultations.html" class="nav-item"><span class="nav-icon">🩺</span> Consultations</a>
-      <a href="ordonnances.html" class="nav-item"><span class="nav-icon">💊</span> Ordonnances</a>
-      <a href="utilisateurs.html" class="nav-item" data-role="admin"><span class="nav-icon">👥</span> Utilisateurs</a>
-      <a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span> Notifications</a>
-      <a href="profil.html" class="nav-item"><span class="nav-icon">👤</span> Mon profil</a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="user-card">
-        <div class="user-avatar" id="sb-user-avatar">?</div>
-        <div class="user-info">
-          <div class="user-name" id="sb-user-name">—</div>
-          <div class="user-role" id="sb-user-role">—</div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="brand">
+                <i data-lucide="hospital"></i> Medicaly
+            </div>
         </div>
-      </div>
-      <button onclick="logout()" class="btn btn-ghost btn-sm w-100 mt-2" style="justify-content:center">🚪 Déconnexion</button>
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Menu Principal</div>
+            <a href="dashboard.html" class="nav-item" data-page="dashboard">
+                <span class="nav-icon"><i data-lucide="layout-dashboard"></i></span> Tableau de bord
+            </a>
+            <a href="patients.html" class="nav-item active" data-page="patients" data-role="admin,medecin,secretaire">
+                <span class="nav-icon"><i data-lucide="users"></i></span> Patients
+            </a>
+            <a href="rendez-vous.html" class="nav-item" data-page="rendez-vous">
+                <span class="nav-icon"><i data-lucide="calendar"></i></span> Rendez-vous
+            </a>
+            <a href="consultations.html" class="nav-item" data-page="consultations" data-role="admin,medecin,patient">
+                <span class="nav-icon"><i data-lucide="stethoscope"></i></span> Consultations
+            </a>
+            <a href="ordonnances.html" class="nav-item" data-page="ordonnances" data-role="admin,medecin,patient">
+                <span class="nav-icon"><i data-lucide="pill"></i></span> Ordonnances
+            </a>
+
+            <div class="nav-section-title" data-role="admin">Administration</div>
+            <a href="utilisateurs.html" class="nav-item" data-page="utilisateurs" data-role="admin">
+                <span class="nav-icon"><i data-lucide="user-cog"></i></span> Utilisateurs
+            </a>
+            <a href="admin.html" class="nav-item" data-page="admin" data-role="admin">
+                <span class="nav-icon"><i data-lucide="settings"></i></span> Paramètres
+            </a>
+
+            <div class="nav-section-title">Personnel</div>
+            <a href="notifications.html" class="nav-item" data-page="notifications">
+                <span class="nav-icon"><i data-lucide="bell"></i></span> Notifications
+            </a>
+            <a href="profil.html" class="nav-item" data-page="profil">
+                <span class="nav-icon"><i data-lucide="user"></i></span> Mon profil
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar" id="sb-user-avatar">?</div>
+                <div class="user-info">
+                    <div class="user-name" id="sb-user-name">...</div>
+                    <div class="user-role" id="sb-user-role">...</div>
+                </div>
+            </div>
+            <button onclick="logout()" class="logout-btn">
+                <i data-lucide="log-out"></i> Déconnexion
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <h2>Gestion des Patients</h2>
+            </div>
+            <div class="topbar-right">
+                <button class="notif-btn" onclick="location.href='notifications.html'">
+                    <i data-lucide="bell"></i>
+                    <span class="badge-notif" id="notif-badge" style="display:none">0</span>
+                </button>
+                <div class="user-greeting">
+                    <span id="top-user-name" style="font-weight:700">Utilisateur</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="page-content">
+            <div class="toolbar">
+                <div class="search-container">
+                    <i data-lucide="search"></i>
+                    <input type="text" id="search-input" placeholder="Rechercher par nom, email ou téléphone..." oninput="onSearch()">
+                </div>
+                <button class="btn btn-primary" onclick="openModal()" data-role="admin,secretaire">
+                    <i data-lucide="plus"></i> Nouveau Patient
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Date naiss.</th>
+                                <th>Sexe</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <tr><td colspan="6" style="text-align:center;padding:100px"><div class="spinner"></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </main>
     </div>
-  </aside>
-
-  <div class="main-content">
-    <header class="topbar">
-      <div class="topbar-left"><h2>Patients</h2></div>
-      <div class="topbar-right">
-        <button class="notif-btn" onclick="location.href='notifications.html'">🔔<span class="badge-notif" id="notif-badge" style="display:none">0</span></button>
-        <span id="top-user-name" style="font-weight:600;font-size:.85rem"></span>
-      </div>
-    </header>
-
-    <main class="page-content">
-      <div class="toolbar">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" class="form-control" id="search-input" placeholder="Rechercher un patient…" oninput="onSearch()">
-        </div>
-        <button class="btn btn-primary" onclick="openModal()" data-role="admin,secretaire">
-          ➕ Nouveau patient
-        </button>
-      </div>
-
-      <div class="card">
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Nom</th><th>Date naiss.</th><th>Sexe</th><th>Téléphone</th><th>Email</th><th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="table-body">
-              <tr><td colspan="6"><div class="loading-overlay"><span class="spinner"></span> Chargement…</div></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="pagination" id="pagination"></div>
-      </div>
-    </main>
-  </div>
 </div>
 
+<!-- Modals must be outside app-layout for better layering sometimes, or at least at the end -->
 <!-- Modal Patient -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h4 id="modal-title">Nouveau patient</h4>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="modal-title">Nouveau Patient</h3>
+            <button class="btn-icon" onclick="closeModal()"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="patient-id">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nom <span style="color:var(--danger)">*</span></label>
+                    <input type="text" id="p-nom" class="form-control" placeholder="Nom de famille" required>
+                </div>
+                <div class="form-group">
+                    <label>Prénom <span style="color:var(--danger)">*</span></label>
+                    <input type="text" id="p-prenom" class="form-control" placeholder="Prénom" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Date de naissance <span style="color:var(--danger)">*</span></label>
+                    <input type="date" id="p-dob" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Sexe <span style="color:var(--danger)">*</span></label>
+                    <select id="p-sexe" class="form-select">
+                        <option value="M">Masculin</option>
+                        <option value="F">Féminin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="tel" id="p-tel" class="form-control" placeholder="0550 00 00 00">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="p-email" class="form-control" placeholder="exemple@mail.com">
+                </div>
+            </div>
+            <div class="form-group" style="margin-bottom:20px">
+                <label>Adresse</label>
+                <input type="text" id="p-adresse" class="form-control" placeholder="Adresse complète">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Groupe sanguin</label>
+                    <select id="p-sanguin" class="form-select">
+                        <option value="">—</option>
+                        <option>A+</option><option>A-</option>
+                        <option>B+</option><option>B-</option>
+                        <option>AB+</option><option>AB-</option>
+                        <option>O+</option><option>O-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Allergies</label>
+                    <input type="text" id="p-allergies" class="form-control" placeholder="ex: Pénicilline">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Antécédents médicaux</label>
+                <textarea id="p-antecedents" class="form-control" rows="3" style="resize:none" placeholder="Notes importantes..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline-primary" onclick="closeModal()">Annuler</button>
+            <button class="btn btn-primary" id="btn-save" onclick="savePatient()">Enregistrer</button>
+        </div>
     </div>
-    <div class="modal-body">
-      <input type="hidden" id="patient-id">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Nom <span class="req">*</span></label>
-          <input type="text" id="p-nom" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Prénom <span class="req">*</span></label>
-          <input type="text" id="p-prenom" class="form-control" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Date de naissance <span class="req">*</span></label>
-          <input type="date" id="p-dob" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Sexe <span class="req">*</span></label>
-          <select id="p-sexe" class="form-select">
-            <option value="M">Masculin</option>
-            <option value="F">Féminin</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Téléphone</label>
-          <input type="tel" id="p-tel" class="form-control">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email</label>
-          <input type="email" id="p-email" class="form-control">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Adresse</label>
-        <input type="text" id="p-adresse" class="form-control">
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Groupe sanguin</label>
-          <select id="p-sanguin" class="form-select">
-            <option value="">—</option>
-            <option>A+</option><option>A-</option>
-            <option>B+</option><option>B-</option>
-            <option>AB+</option><option>AB-</option>
-            <option>O+</option><option>O-</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Allergies</label>
-          <input type="text" id="p-allergies" class="form-control" placeholder="ex: Pénicilline">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Antécédents médicaux</label>
-        <textarea id="p-antecedents" class="form-control"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-primary" id="btn-save" onclick="savePatient()">💾 Enregistrer</button>
-    </div>
-  </div>
 </div>
 
-<!-- Modal Dossier -->
+<!-- Modal Dossier (Détails) -->
 <div class="modal-overlay" id="modal-dossier" onclick="closeDossier(event)">
-  <div class="modal modal-xl">
-    <div class="modal-header">
-      <h4>📂 Dossier médical — <span id="dossier-nom"></span></h4>
-      <button class="modal-close" onclick="closeDossier()">✕</button>
+    <div class="modal" style="max-width:900px">
+        <div class="modal-header">
+            <h3>Dossier Médical : <span id="dossier-nom" style="color:var(--accent)"></span></h3>
+            <button class="btn-icon" onclick="closeDossier()"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body" id="dossier-content">
+            <div style="text-align:center;padding:50px"><div class="spinner"></div></div>
+        </div>
     </div>
-    <div class="modal-body" id="dossier-content">
-      <div class="loading-overlay"><span class="spinner"></span></div>
-    </div>
-  </div>
 </div>
 
 <div id="toast-container"></div>
@@ -164,5 +288,14 @@
 <script src="js/auth.js"></script>
 <script src="js/app.js"></script>
 <script src="js/patients.js"></script>
+<script>
+    if (window.lucide) lucide.createIcons();
+    // Update active user in topbar
+    const user = Auth.getUser();
+    if(user) {
+        const topName = document.getElementById('top-user-name');
+        if(topName) topName.textContent = user.prenom;
+    }
+</script>
 </body>
 </html>
